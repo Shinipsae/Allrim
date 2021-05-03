@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="kr.hs.allrim.member.repository.IMemberMapper">
+	
+	<resultMap id="MemberMap" type="kr.hs.allrim.member.model.MemberVO">
+		<id property="userEmail" column="user_email" />
+		<result property="userPw" column="user_pw" />
+		<result property="userGrade" column="user_grade" />
+		<result property="userClass" column="user_class" />
+	</resultMap>
+	
+	<insert id="addMember"> <!-- 회원가입 -->
+		INSERT INTO user_tb
+		(user_email, user_pw, user_grade, user_class)
+		VALUES (#{userEmail}, #{userPw}, #{userGrade}, #{userClass})
+	</insert>
+
+	<delete id="deleteMember"> <!-- 회원탈퇴 -->
+		DELETE FROM user_tb
+		WHERE user_Email = #{userEmail}
+	</delete>
+	
+	<update id="modifyMember"> <!-- 회원정보수정 -->
+		UPDATE user_tb
+		SET user_grade=#{userGrade}, user_class=#{userClass}
+		WHERE user_email=#{userEmail}
+	</update>
+	
+	<select id="showMember" resultMap="MemberMap"> <!-- 회원정보조회-->
+		SELECT * FROM user_tb
+		WHERE userEmail=#{userEmail}
+	</select>
+	
+
+</mapper>
